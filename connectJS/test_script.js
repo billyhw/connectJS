@@ -12,29 +12,43 @@ const client = new pg.Client({
 });
 
 const getFirstName = (last_name, callback) => {
+
   client.connect((err) => {
+
     if (err) {
       return console.error("Connection Error", err);
     }
+
     let query = "SELECT * FROM famous_people WHERE last_name = $1;"
+
+    console.log('Searching');
+
     client.query(query, [last_name], (err, result) => {
+
       if (err) {
         return console.error("error running query", err);
         callback([]);
       }
+
       else {
         resultArr = [];
         for (i = 0; i < result.rows.length; i++) {
           resultArr.push(result.rows[i].first_name)
         }
+        console.log(`Returning ${resultArr.length} results from query ${last_name}`)
         callback(resultArr);
       }
+
       client.end();
+
     });
   });
 }
 
-var tmp = 'Lincoln';
-getFirstName('Lincoln', (res) => {
-  console.log(res);
+var input =  process.argv[2];
+
+getFirstName(input, (res) => {
+
+  res.forEach( (x) => { console.log(x) } )
+
 })
