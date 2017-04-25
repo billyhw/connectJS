@@ -48,7 +48,6 @@ const getFirstName = (last_name, callback) => {
 var input =  process.argv[2];
 
 getFirstName(input, (res) => {
-
   res.forEach( (x) => { console.log(x) } )
-
 })
+
