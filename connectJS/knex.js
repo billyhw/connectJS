@@ -33,7 +33,7 @@ const getFirstName = (last_name, callback) => {
       }
     })
 
-  pg.destroy();
+  //pg.destroy();
 
 };
 

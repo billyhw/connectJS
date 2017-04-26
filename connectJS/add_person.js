@@ -35,18 +35,28 @@ const getFirstName = (last_name, callback) => {
 
 };
 
-var first_name = "Paul";
-var last_name = "McCartney";
-var date = "1950-05-02";
+// var first_name = "Paul";
+// var last_name = "McCartney";
+// var date = "1950-05-02";
 
 addPerson = function(first_name, last_name, date) {
   pg("famous_people").insert({"first_name": first_name, "last_name": last_name, "birthdate": date})
+    .then(()=>{
+      console.log('Done insert');
+      getFirstName(last_name, (res) => {
+       res.forEach( (x) => { console.log(x) } )
+    })
+  }).then(() => {
+    pg.destroy();
+  }).catch((e) => {
+    console.error(e);
+  })
 }
 
 addPerson(process.argv[2],process.argv[3],process.argv[4])
 
-getFirstName(process.argv[3], (res) => {
-  res.forEach( (x) => { console.log(x) } )
-  })
+// getFirstName(process.argv[3], (res) => {
+//   res.forEach( (x) => { console.log(x) } )
+//   })
 
-pg.destroy()
+//pg.destroy()
